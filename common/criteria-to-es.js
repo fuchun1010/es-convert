@@ -71,16 +71,27 @@ const toQuery = (filter) => {
         p = node.bool[rootOperator]
       }
       else {
-        const {item:{displayName}} = c
-        tmpCause.bool[operator].push({name: displayName})
+        const {item:{displayName, fieldType}, values, comparisonOperator} = c
+        let condition = {}
+        if(fieldType === 'Text') {
+          condition.term = {
+            [displayName]: values[0]
+          }
+        }
+        else if(fieldType === 'Numeric') {
+          let compareOp = comparisonOperator === '>' ? 'gt':'lt'
+          condition.range = {
+            [displayName]: +values[0]
+          }
+        }
+        tmpCause.bool[operator].push(condition)
       }
     }
 
   }
   
   iterCondition(filter, [])
-  debugger
-  return tmpCause
+  return node
 }
 
 const transform = (analysisRequest) => {
@@ -91,8 +102,10 @@ const transform = (analysisRequest) => {
   const {dataSetId, bindingItems, filter, selectors} = analysisRequest
 
   const aggs = toAgg(bindingItems, {})
-  const query = toQuery(filter, {})
-  return {}
+  const query = {
+    query: toQuery(filter, {})
+  }
+  return {...aggs, ...query}
 
 }
 
