@@ -34,12 +34,12 @@ const toAgg = (bindingItems, query) => {
   return {size:0, ...query}
 }
 
-const toQuery = (filter, clause) => {
+const toQuery = (filter) => {
 
   let node = {}
-  let  p = {}
-  let rootOperator = {}
-  const iterCondition = (c,p) => {
+  let rootOperator = ''
+
+  const iterCondition = (c,p = []) => {
     let {operator, conditions} = c
     operator = operator === 'or' ? 'should': 'must' 
     let tmpCause = {
@@ -47,66 +47,38 @@ const toQuery = (filter, clause) => {
         [operator] : []
       }
     }
-
-   if(Object.keys(node).length === 0) {
+    if(!node.bool) {
+      node = tmpCause
       rootOperator = operator
-      node = {
-        bool: {
-          [rootOperator]:[]
-        }
-      }
-      p = node.bool[rootOperator]
-   }
+    }
+
+    if(p.length === 0) {
+      p = tmpCause
+    }
+    else 
+      p.push(tmpCause)
+    
 
     const len = conditions.length
-    for(let i = 0; i < len; i++) {
+
+    for(let i = 0; i < len ; i++) {
       let c = conditions[i]
-      const {nodeType} = c
-      if(nodeType === 'group') {
-        p.push(tmpCause)
+      let {nodeType} = c
+      const isGroup = nodeType === 'group'
+      if(isGroup) {
         p = tmpCause.bool[operator]
-        const rs = iterCondition(c, p)
-        debugger
-        p.push(rs)
-        debugger
+        iterCondition(c, p)
         p = node.bool[rootOperator]
-        debugger
       }
       else {
-        const {item:{displayName, fieldType}, values, comparisonOperator} = c
-        let condition 
-        //TODO要处理values是个多的情况
-        let value = values.length > 0 ? values[0]: values
-        let op
-        if(fieldType === 'Text') {
-          condition = {
-            term: {
-              [displayName]:  value
-            }
-          }
-        }
-        else if(fieldType === 'Numeric' ) {
-          
-          op = comparisonOperator === '>' ? 'gt':'lt'
-          condition = {
-            range : {
-              [displayName]: {
-                [op]: value
-              }
-            }
-          }
-        }
-        
-        tmpCause.bool[operator].push(condition)
-       
+        const {item:{displayName}} = c
+        tmpCause.bool[operator].push({name: displayName})
       }
     }
 
-    return tmpCause
-
   }
   
-  iterCondition(filter, {})
+  iterCondition(filter, [])
   debugger
   return tmpCause
 }
