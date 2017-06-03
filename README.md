@@ -1,2 +1,15 @@
 ### this is only test for convert request from font to es query
 # git push --set-upstream es-koa master
+
+### you can use next test case 
+
+#### single nested layer
+```json
+curl  -XGET "http://localhost:3008/analysis" -H "Content-Type: application/json"  -d '{"dataSetId":"54113a3c-1338-421d-b07b-b8884f13e054","bindingItems":[{"fieldId":"6230e0b1-c5ea-4d27-b80f-7610d20ab03a","bindingType":"Category"},{"bindingType":"Metric","dataType":"Raw","bindingFunction":{"functionName":"sum","functionType":"UDAF","parameters":[{"fieldId":"a6797fc1-396f-4d2a-9714-49cf245994e2"}]}}],"filter":{"operator":"or","number":"39bbec9f-2857-4017-82d2-698b6ee63801","conditions":[{"number":"a2d78d0f-cf6c-4964-b2d0-4da5d43f6bb5","nodeType":"condition","comparisonOperator":"IN_OPTIONS","values":["audi"],"item":{"fieldId":"f416ac3b-5879-495b-b6a3-bd174d21be21","fieldType":"Text","displayName":"brand"}},{"nodeType":"group","operator":"and","number":"47700b43-fa6d-460f-982b-7728bf9f7274","conditions":[{"number":"bd4a015e-f173-4a23-bd33-84958aac3d0e","nodeType":"condition","comparisonOperator":"IN_OPTIONS","values":["A4L"],"item":{"fieldId":"1338a1bd-9d73-479c-b396-09932aa96cac","fieldType":"Text","displayName":"category"}},{"number":"bcc73a83-f991-4d90-b3af-a381635518a8","nodeType":"condition","comparisonOperator":">","values":["200000"],"item":{"fieldId":"4edd918c-d5af-48b0-bcb1-989492573380","fieldType":"Numeric","displayName":"cost"}}]}]},"selectors":{}}'
+```
+
+#### multi nested layer
+```json
+curl  -XGET "http://localhost:3008/analysis" -H "Content-Type: application/json"  -d '{"dataSetId":"54113a3c-1338-421d-b07b-b8884f13e054","bindingItems":[{"fieldId":"6230e0b1-c5ea-4d27-b80f-7610d20ab03a","bindingType":"Category"},{"bindingType":"Metric","dataType":"Raw","bindingFunction":{"functionName":"sum","functionType":"UDAF","parameters":[{"fieldId":"a6797fc1-396f-4d2a-9714-49cf245994e2"}]}}],"filter":{"operator":"or","number":"39bbec9f-2857-4017-82d2-698b6ee63801","conditions":[{"number":"a2d78d0f-cf6c-4964-b2d0-4da5d43f6bb5","nodeType":"condition","comparisonOperator":"IN_OPTIONS","values":["audi"],"item":{"fieldId":"f416ac3b-5879-495b-b6a3-bd174d21be21","fieldType":"Text","displayName":"brand"}},{"nodeType":"group","operator":"and","number":"47700b43-fa6d-460f-982b-7728bf9f7274","conditions":[{"number":"bd4a015e-f173-4a23-bd33-84958aac3d0e","nodeType":"condition","comparisonOperator":"IN_OPTIONS","values":["A4L"],"item":{"fieldId":"1338a1bd-9d73-479c-b396-09932aa96cac","fieldType":"Text","displayName":"category"}},{"number":"bcc73a83-f991-4d90-b3af-a381635518a8","nodeType":"condition","comparisonOperator":">","values":["200000"],"item":{"fieldId":"4edd918c-d5af-48b0-bcb1-989492573380","fieldType":"Numeric","displayName":"cost"}},{"nodeType":"group","operator":"and","number":"fcee814c-6c14-475c-be79-5ca1f06ae058","conditions":[{"number":"50577eab-eb00-4d83-be84-88b791fd6b65","nodeType":"condition","comparisonOperator":">","values":["3000"],"item":{"fieldId":"a6797fc1-396f-4d2a-9714-49cf245994e2","fieldType":"Numeric","displayName":"sales"}}]}]}]},"selectors":{}}';
+
+```
