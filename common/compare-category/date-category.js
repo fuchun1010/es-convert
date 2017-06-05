@@ -1,23 +1,37 @@
-
-const dateEq = () => {
-
-}
-
-const dateNotEq = () => {
+const dateInRange = () => {
 
 }
 
-const dateInclude = () => {
+const dateOutRange = () => {
 
 }
 
-const textRange = () => {
+const preDate = () => {
+
+}
+
+const afterDate = () => {
+
+}
+
+const emptyDate = () => {
+
+}
+
+const isNotEmptyDate = () => {
+  
+}
+
+const dynamicDate = () => {
 
 }
 
 module.exports = {
-  dateEq,
-  dateNotEq,
-  dateInclude,
-  textRange
+  dateInRange,
+  dateOutRange,
+  preDate,
+  afterDate,
+  emptyDate,
+  isNotEmptyDate,
+  dynamicDate
 }

@@ -23,11 +23,19 @@ const numericLte = () => {
 
 }
 
-const numericRange = () => {
+const numericIsNull = () => {
 
 }
 
-const getOperatorEntity = (key) => {
+const numericIsNotNull = () => {
+
+}
+
+const numericInRange = () => {
+
+}
+
+const numericOutRange = () => {
 
 }
 
@@ -38,5 +46,8 @@ module.exports = {
   numericGte,
   numericLt,
   numericLte,
-  numericRange
+  numericIsNull,
+  numericIsNotNull,
+  numericInRange,
+  numericOutRange
 }
