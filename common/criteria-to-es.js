@@ -58,7 +58,6 @@ const toQuery = (filter) => {
     else 
       p.push(tmpCause)
     
-
     const len = conditions.length
 
     for(let i = 0; i < len ; i++) {

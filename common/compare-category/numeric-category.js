@@ -1,42 +1,94 @@
 
-const numericEqual = () => {
+const numericEqual = (displayName, values) => {
+  let condition = {
+    term: {
+      [displayName]: values[0]
+    }
+  }
+  
+  return condition
+}
+
+const numericNotEqual = (displayName, values) => {
+  
+}
+
+const numericGt = (displayName, values) => {
+  let condition = {
+      range:{
+        [displayName]:{
+          gt: +values[0]
+        }
+      }
+  }
+  return condition
+}
+
+const numericGte = (displayName, values) => {
+  let condition = {
+    range:{
+      [displayName]:{
+        gte: +values[0]
+      }
+    }
+  }
+  return condition
+}
+
+const numericLt = (displayName, values) => {
+  let condition = {
+    range:{
+      [displayName]:{
+        lt: +values[0]
+      }
+    }
+  }
+  return condition
+}
+
+const numericLte = (displayName, values) => {
+  let condition = {
+    range:{
+      [displayName]:{
+        lte: +values[0]
+      }
+    }
+  }
+  return condition
+}
+
+const numericIsNull = (displayName, values) => {
 
 }
 
-const numericNotEqual = () => {
+const numericIsNotNull = (displayName, values) => {
 
 }
 
-const numericGt = () => {
-
+const numericInRange = (displayName, values) => {
+  let condition = {
+    range:{
+      [displayName]:{
+        gte: +values[0],
+        lte: +values[1]
+      }
+    }
+  }
+  return condition
 }
 
-const numericGte = () => {
-
-}
-
-const numericLt = () => {
-
-}
-
-const numericLte = () => {
-
-}
-
-const numericIsNull = () => {
-
-}
-
-const numericIsNotNull = () => {
-
-}
-
-const numericInRange = () => {
-
-}
-
-const numericOutRange = () => {
-
+const numericOutRange = (displayName, values) => {
+  let condition = {
+    must_not: {
+      range : {
+        [displayName] : { 
+          "gte" : +values[0], 
+          "lte" : +values[1] 
+        }
+      }
+    }
+  }
+  return condition
 }
 
 module.exports = {
