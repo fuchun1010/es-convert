@@ -58,11 +58,35 @@ const numericLte = (displayName, values) => {
 }
 
 const numericIsNull = (displayName, values) => {
-
+  const condition = {
+    bool: {
+      must: {
+        script: {
+          script: {
+            inline: 'doc[`${displayName}`] === null ? true:false',
+            lang: 'painless'
+          }
+        }
+      }
+    }
+  }
+  return condition
 }
 
 const numericIsNotNull = (displayName, values) => {
-
+  const condition = {
+    bool: {
+      must: {
+        script: {
+          script: {
+            inline: 'doc[`${displayName}`] != null ? true:false',
+            lang: 'painless'
+          }
+        }
+      }
+    }
+  }
+  return condition
 }
 
 const numericInRange = (displayName, values) => {
