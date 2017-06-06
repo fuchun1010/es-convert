@@ -63,7 +63,7 @@ const numericIsNull = (displayName, values) => {
       must: {
         script: {
           script: {
-            inline: 'doc[`${displayName}`] === null ? true:false',
+            inline: 'doc.`${displayName}` === null ? true:false',
             lang: 'painless'
           }
         }
@@ -79,7 +79,7 @@ const numericIsNotNull = (displayName, values) => {
       must: {
         script: {
           script: {
-            inline: 'doc[`${displayName}`] != null ? true:false',
+            inline: 'doc.`${displayName}` != null ? true:false',
             lang: 'painless'
           }
         }
