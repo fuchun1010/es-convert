@@ -1,6 +1,11 @@
 
 const textEq = () => {
-
+  const condition = {
+    "query": {
+      
+    }
+  }
+  return condition
 }
 
 const textNotEq = () => {
