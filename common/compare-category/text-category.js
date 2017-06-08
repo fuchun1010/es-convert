@@ -1,23 +1,57 @@
 
-const textEq = () => {
+const textEq = (displayName, values) => {
+  let condition = {
+    term: {
+      [displayName]: values[0]
+    }
+  }
+  
+  return condition
+}
+
+const textNotEq = (displayName, values) => {
   const condition = {
-    "query": {
-      
+    must_not: {
+      [displayName]: values[0]
     }
   }
   return condition
 }
 
-const textNotEq = () => {
+const textExists = (displayName, values) => {
+  const should = values.map(v => {
+    bool: {
+      must:{
+        term: {
+          [displayName]: v
+        }
+      }
+    }
+  })
 
+  let condition = {
+      "bool": {should}
+  }
+  return condition
 }
 
-const textExists = () => {
+const textNotExists = (displayName, values) => {
 
-}
+  const should = values.map(v => {
+    bool: {
+      must_not:{
+        term: {
+          [displayName]: v
+        }
+      }
+    }
+  })
 
-const textNotExists = () => {
+  let condition = {
+      "bool": {should}
+  }
 
+  return condition
 }
 
 const textPrefixEq = () => {
