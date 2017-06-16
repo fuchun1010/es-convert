@@ -156,7 +156,6 @@ const transformAgg = (bindingItems) => {
     }
     else {
       const {functionName,parameters} = bindingFunction
-      debugger
       fieldId = parameters[0] && parameters[0].fieldId
       if(!nextPointer.aggs) {
         nextPointer.aggs = {}
@@ -167,10 +166,10 @@ const transformAgg = (bindingItems) => {
           field: fieldId
         }
       }
-      nextPointer = nextPointer.aggs
     }
 
   }
+  debugger
   return head
 }
 
