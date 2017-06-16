@@ -11,7 +11,7 @@ const toAgg = (bindingItems, query) => {
           [fieldName]: {
             terms:{
               field: fieldName,
-              size: 5000
+              size: 200
             }
           }
         }
@@ -108,6 +108,73 @@ const transform = (analysisRequest) => {
 
 }
 
+const transformAgg = (bindingItems) => {
+  let head 
+  let nextPointer
+  let len = bindingItems.length
+  let newAgg
+  for(let i = 0; i < len; i++) {
+    let {fieldId, bindingType, bindingFunction} = bindingItems[i]
+    let isCategory = bindingType === 'Category'
+
+    if(!head) {
+      if(isCategory) {
+        head = nextPointer = {
+          aggs: {
+            [fieldId]: {
+              terms: {
+                field: fieldId
+              }
+            }
+          }
+        }
+        nextPointer = head.aggs[fieldId]
+        continue
+      }
+      else {
+        debugger
+        continue
+      }
+    }
+
+    if(isCategory) {
+      if(!nextPointer.aggs) {
+        nextPointer.aggs = {}
+      }
+      newAgg = {
+        [fieldId]:{
+            terms: {
+              field: fieldId
+            }
+        }
+      }
+
+      nextPointer.aggs = {
+        ...newAgg
+      }
+      nextPointer = nextPointer.aggs[fieldId]
+    }
+    else {
+      const {functionName,parameters} = bindingFunction
+      debugger
+      fieldId = parameters[0] && parameters[0].fieldId
+      if(!nextPointer.aggs) {
+        nextPointer.aggs = {}
+      }
+      let key = `${functionName}_${fieldId}`
+      nextPointer.aggs[key] = {
+        [functionName]: {
+          field: fieldId
+        }
+      }
+      nextPointer = nextPointer.aggs
+    }
+
+  }
+  return head
+}
+
 module.exports = {
-  transform
+  transform,
+  transformAgg
 }
